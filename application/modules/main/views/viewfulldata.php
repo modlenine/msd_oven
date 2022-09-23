@@ -127,7 +127,7 @@
 
                             <div class="col-md-12 bottommargin-sm">
                                 <label for="">กรุณาเลือกวัน</label>
-                                <input id="mdrd_chooseDate" name="mdrd_chooseDate" class="form-control date-picker" placeholder="Select Date" type="text">
+                                <input id="mdrd_chooseDate" name="mdrd_chooseDate" class="form-control date-picker" placeholder="กรุณาเลือกวัน" type="text">
                             </div>
                         </div>
 
@@ -229,7 +229,7 @@
 
                             <div class="col-md-12 bottommargin-sm">
                                 <label for="">กรุณาเลือกวัน</label>
-                                <input id="mdrd_stopovenDate" name="mdrd_stopovenDate" class="form-control date-picker" placeholder="Select Date" type="text">
+                                <input id="mdrd_stopovenDate" name="mdrd_stopovenDate" class="form-control date-picker" placeholder="กรุณาเลือกวัน" type="text">
                             </div>
                         </div>
 
@@ -259,7 +259,7 @@
 
                             <div class="col-md-12 bottommargin-sm form-group">
                                 <label for="">กรุณาเลือกวัน</label>
-                                <input id="mdrd_endovenDate" name="mdrd_endovenDate" class="form-control date-picker" placeholder="Select Date" type="text">
+                                <input id="mdrd_endovenDate" name="mdrd_endovenDate" class="form-control date-picker" placeholder="กรุณาเลือกวัน" type="text">
                             </div>
 
                             <div class="col-lg-12 bottommargin">
@@ -490,7 +490,7 @@
                                 </div>
                                 <div class="col-md-12 bottommargin-sm form-group">
                                     <label for=""><b>วันที่โหลดของใส่ถาด</b></label>
-                                    <input id="mdrd_loadoven_date_edit" name="mdrd_loadoven_date_edit" class="form-control date-picker" placeholder="Select Date" type="text">
+                                    <input id="mdrd_loadoven_date_edit" name="mdrd_loadoven_date_edit" class="form-control date-picker" placeholder="กรุณาเลือกวัน" type="text">
                                 </div>
                                 <div class="col-lg-12 form-group">
                                     <div id="edit_showOven1"></div>
@@ -577,7 +577,7 @@
                                 </div>
                                 <div class="col-md-12 bottommargin-sm form-group">
                                     <label for=""><b>วันที่อบเสร็จ</b></label>
-                                    <input id="mdrd_stopoven_date_edit" name="mdrd_stopoven_date_edit" class="form-control date-picker" placeholder="Select Date" type="text">
+                                    <input id="mdrd_stopoven_date_edit" name="mdrd_stopoven_date_edit" class="form-control date-picker" placeholder="กรุณาเลือกวัน" type="text">
                                 </div>
                             </div>
 
@@ -607,7 +607,7 @@
 
                                 <div class="col-md-12 bottommargin-sm form-group">
                                     <label for=""><b>วันที่เทสี</b></label>
-                                    <input id="mdrd_endoven_date_edit" name="mdrd_endoven_date_edit" class="form-control date-picker" placeholder="Select Date" type="text">
+                                    <input id="mdrd_endoven_date_edit" name="mdrd_endoven_date_edit" class="form-control date-picker" placeholder="กรุณาเลือกวัน" type="text">
                                 </div>
 
                                 <div class="col-lg-12 form-group">
@@ -1382,7 +1382,7 @@ $(document).ready(function(){
 
                 }else if(sd_status == "เริ่มอบแล้ว"){
 
-                    if($('#mdrd_stopoven').val() != ""){
+                    if($('#mdrd_stopoven').val() != "" && $('#mdrd_stopovenDate').val() != ""){
 
                         const form = $('#frm_saveRunDetail')[0];
                         const data = new FormData(form);
@@ -1411,9 +1411,17 @@ $(document).ready(function(){
                                 });
                             }
                         });
-                    }else{
+                    }else if($('#mdrd_stopoven').val() == ""){
                         swal({
                             title: 'กรุณาระบุเวลา ปิดตู้',
+                            type: 'error',
+                            showConfirmButton: false,
+                            timer:800
+                        });
+                        $('#btn-saveRunDetail').prop('disabled' , false);
+                    }else if($('#mdrd_stopovenDate').val() == ""){
+                        swal({
+                            title: 'กรุณาระบุวัน ปิดตู้',
                             type: 'error',
                             showConfirmButton: false,
                             timer:800
@@ -1423,7 +1431,7 @@ $(document).ready(function(){
 
                 }else if(sd_status == "อบเสร็จแล้วรอเทสี"){
 
-                    if($('#mdrd_endoven').val() != ""){
+                    if($('#mdrd_endoven').val() != "" && $('#mdrd_endovenDate').val() != ""){
 
                         const form = $('#frm_saveRunDetail')[0];
                         const data = new FormData(form);
@@ -1452,9 +1460,17 @@ $(document).ready(function(){
                                 });
                             }
                         });
-                    }else{
+                    }else if($('#mdrd_endoven').val() == ""){
                         swal({
                             title: 'กรุณาระบุเวลา ปิดตู้',
+                            type: 'error',
+                            showConfirmButton: false,
+                            timer:800
+                        });
+                        $('#btn-saveRunDetail').prop('disabled' , false);
+                    }else if($('#mdrd_endovenDate').val() == ""){
+                        swal({
+                            title: 'กรุณาระบุวัน ปิดตู้',
                             type: 'error',
                             showConfirmButton: false,
                             timer:800
@@ -1463,7 +1479,7 @@ $(document).ready(function(){
                     }
 
                 }else if(sd_status == ""){
-                    if($('#mdrd_chooseTime').val() != "")
+                    if($('#mdrd_chooseTime').val() != "" && $('#mdrd_chooseDate').val() != "")
                     {
                         const form = $('#frm_saveRunDetail')[0];
                         const data = new FormData(form);
@@ -1496,9 +1512,17 @@ $(document).ready(function(){
                                 $('#btn-saveRunDetail').prop('disabled' , false);
                             }
                         });
-                    }else{
+                    }else if($('#mdrd_chooseTime').val() == ""){
                         swal({
                             title: 'กรุณาเลือกเวลาเดินงาน',
+                            type: 'error',
+                            showConfirmButton: false,
+                            timer:800
+                        })
+                        $('#btn-saveRunDetail').prop('disabled' , false);
+                    }else if($('#mdrd_chooseDate').val() == ""){
+                        swal({
+                            title: 'กรุณาเลือกวันเดินงาน',
                             type: 'error',
                             showConfirmButton: false,
                             timer:800
@@ -3436,6 +3460,13 @@ $(document).ready(function(){
                     runData[i].sd_waitlowtemp = "";
                 }
 
+                let dateShow = '';
+                if(runData[i].sd_loadoven_date == null){
+                    dateShow = '';
+                }else{
+                    dateShow = runData[i].sd_loadoven_date;
+                }
+
                     output +=`
                     <tr>
                         <td class="areaM">
@@ -3457,7 +3488,7 @@ $(document).ready(function(){
                             </div>
                             
                         </td>
-                        <td>`+runData[i].sd_loadoven_date+`</td>
+                        <td>`+dateShow+`</td>
                         <td>`+runData[i].sd_loadoven+`</td>
                         <td>`+iconImageRunOven1+`</td>
                         <td>`+runData[i].sd_closeoven+`</td>

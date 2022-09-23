@@ -19,6 +19,9 @@
 	<!-- Bootstrap File Upload Plugin -->
 	<script src="<?=base_url('assets/')?>fileupload/bs-filestyle.js"></script>
 
+	<!-- Moment -->
+	<script src="<?=base_url('assets/moment/moment.min.js')?>"></script>
+
 
 	<!-- Date & Time Picker JS -->
 	<script src="<?=base_url('assets/')?>timepicker/js/components/moment.js"></script>

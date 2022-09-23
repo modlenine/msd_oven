@@ -755,7 +755,7 @@ class Main_model extends CI_Model {
             $lastStatus = "";
 
             $sqlRunGroup = $this->db->query("SELECT 
-            d_linenum_group , d_worktime , d_workdate , d_detailcode
+            d_linenum_group , d_worktime , d_workdate , d_detailcode , d_datetime
             FROM details 
             WHERE d_maincode = '$received_data->m_code' AND 
             d_action = 'Run' 
@@ -899,6 +899,7 @@ class Main_model extends CI_Model {
 
                     $resultLineGroup = array(
                         "d_worktime" => $rs->d_worktime,
+                        "d_datetime" => $rs->d_datetime,
                         "d_workdate" => conDateFromDb($rs->d_workdate),
                         "d_linenum_group" => $rs->d_linenum_group,
                         "detailcode" => $rs->d_detailcode,
