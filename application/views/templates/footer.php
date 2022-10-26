@@ -19,9 +19,6 @@
 	<!-- Bootstrap File Upload Plugin -->
 	<script src="<?=base_url('assets/')?>fileupload/bs-filestyle.js"></script>
 
-	<!-- Moment -->
-	<script src="<?=base_url('assets/moment/moment.min.js')?>"></script>
-
 
 	<!-- Date & Time Picker JS -->
 	<script src="<?=base_url('assets/')?>timepicker/js/components/moment.js"></script>
@@ -33,11 +30,14 @@
 	<script src="<?=base_url()?>assets/dist/zebra_datepicker.min.js"></script>
 	<script src="<?=base_url()?>assets/ekko_lightbox/ekko-lightbox.min.js"></script>
 
+	<!-- Moment -->
+	<script src="<?=base_url('assets/moment/moment.min.js')?>"></script>
+
 </body>
 
 <script>
 	$(document).ready(function(){
-		$('.datetimepicker1 , .datetimepicker2 , .datetimepicker3 , .datetimepicker4 , .datetimepicker5 , .datetimepicker6').datetimepicker({
+		$('.datetimepicker1 , .datetimepicker2 , .datetimepicker3 , .datetimepicker4 , .datetimepicker5 , .datetimepicker6 , .datetimepickerRun').datetimepicker({
 			format: "HH:mm",
 			showClose: true
     	});

@@ -468,6 +468,20 @@
                         <div class="detailEditSection" style="display:none;">
 
                             <div class="row form-group loadOven_edit" style="display:none;">
+
+                                <div class="col-md-12">
+                                    <label for=""><b>เวลาเดินงาน</b></label>
+                                    <div class="form-group">
+                                        <div class="input-group text-left" data-target-input="nearest" data-target=".datetimepickerRun">
+                                            <input type="text" id="mdrd_chooseTime_edit" name="mdrd_chooseTime_edit" class="form-control datetimepicker-input datetimepickerRun" data-target=".datetimepickerRun" placeholder="กรุณาเลือกเวลา" required/>
+                                            <div class="input-group-append" data-target=".datetimepickerRun" data-toggle="datetimepicker">
+                                                <div class="input-group-text bgClock"><i class="icon-clock"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                                 <div class="col-md-12">
                                     <label for=""><b>โหลดของใส่ถาด</b></label>
 
@@ -488,6 +502,7 @@
                                     </div>
 
                                 </div>
+
                                 <div class="col-md-12 bottommargin-sm form-group">
                                     <label for=""><b>วันที่โหลดของใส่ถาด</b></label>
                                     <input id="mdrd_loadoven_date_edit" name="mdrd_loadoven_date_edit" class="form-control date-picker" placeholder="กรุณาเลือกวัน" type="text">
@@ -2738,7 +2753,8 @@ $(document).ready(function(){
                 `;
                 let runGroupLists = res.data.runGroupList;
                     for(let i = 0; i < runGroupLists.length; i++){
-                        output +=`<option value="`+runGroupLists[i].d_detailcode+`">`+runGroupLists[i].d_worktime+`</option>`;
+                        let conWorkdate = moment(runGroupLists[i].d_workdate).format('DD/MM/yy');
+                        output +=`<option value="`+runGroupLists[i].d_detailcode+`">`+runGroupLists[i].d_worktime+` `+conWorkdate+`</option>`;
                     }
                 output += `</select>`;
                 output +=`
@@ -2767,11 +2783,13 @@ $(document).ready(function(){
                 let runImageOven1 = res.data.runImageOven1;
                 let runImageOven2 = res.data.runImageOven2;
                 let sd_status = res.data.subDetail.sd_status;
+                let runDetailTime = res.data.runDetailTime;
 
 
             // Zone โหลดของใส่ถาด
                 let imageOven1Html = '';
                 $('#mdrd_loadoven_edit').val(res.data.subDetail.sd_loadoven);
+                $('#mdrd_chooseTime_edit').val(runDetailTime);
                 $('#mdrd_loadoven_date_edit').val(res.data.subDetail.sd_loadoven_date);
                 imageOven1Html +=`
                 <span><b>รูปโหลดของใส่ถาด</b></span>
@@ -3316,7 +3334,7 @@ $(document).ready(function(){
             output +=`<td><b>S/POINT</b></td>
 
            
-            <td colspan="8"></td>
+            <td colspan="9"></td>
             `;
                     for(let i = 0; i < spointData.length; i++){
                         output +=`

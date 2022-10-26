@@ -755,7 +755,7 @@ class Main_model extends CI_Model {
             $lastStatus = "";
 
             $sqlRunGroup = $this->db->query("SELECT 
-            d_linenum_group , d_worktime , d_workdate , d_detailcode , d_datetime
+            d_linenum_group , d_worktime , d_workdate , d_detailcode
             FROM details 
             WHERE d_maincode = '$received_data->m_code' AND 
             d_action = 'Run' 
@@ -899,7 +899,6 @@ class Main_model extends CI_Model {
 
                     $resultLineGroup = array(
                         "d_worktime" => $rs->d_worktime,
-                        "d_datetime" => $rs->d_datetime,
                         "d_workdate" => conDateFromDb($rs->d_workdate),
                         "d_linenum_group" => $rs->d_linenum_group,
                         "detailcode" => $rs->d_detailcode,
@@ -949,7 +948,6 @@ class Main_model extends CI_Model {
         }
         echo json_encode($output);
     }
-
 
 
     private function loadMemoRunDetail($m_code , $detailcode)
@@ -1753,6 +1751,7 @@ class Main_model extends CI_Model {
         if($received_data->action == "loadRunGroupList"){
             $sql = $this->db->query("SELECT
             d_worktime,
+            d_workdate,
             d_detailcode,
             d_maincode
             FROM details
@@ -1875,6 +1874,7 @@ class Main_model extends CI_Model {
                 "runImageOven1" => $rsImageOven1,
                 "runImageOven2" => $rsImageOven2,
                 "runDetailForEdit" => $sql->result(),
+                "runDetailTime" => $sql->row()->d_worktime,
                 "subDetail" => $sqlGetSubDetail->row()
             );
         }else{
@@ -1968,6 +1968,16 @@ class Main_model extends CI_Model {
                 $this->db->where("sd_detailcode" , $detailcode);
                 $this->db->update("sub_details" , $arUpdateSub);
                 // Update ข้อมูล Sub Detail
+
+
+                //Update details
+                $arUpdateDetail = array(
+                    "d_worktime" => $this->input->post("mdrd_chooseTime_edit"),
+                );
+                $this->db->where("d_maincode" , $maincode);
+                $this->db->where("d_detailcode" , $detailcode);
+                $this->db->update("details" , $arUpdateDetail);
+                //Update details
 
 
 
