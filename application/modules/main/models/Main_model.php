@@ -242,7 +242,7 @@ class Main_model extends CI_Model {
             FROM
             template_master
             WHERE template_master.master_name LIKE '%$received_data->templatename%'
-            ORDER BY template_master.master_name ASC LIMIT 20
+            ORDER BY template_master.master_name ASC LIMIT 50
             ");
 
             $result = [];
@@ -289,7 +289,7 @@ class Main_model extends CI_Model {
             FROM
             template_master
             WHERE template_master.master_itemnumber LIKE '%$received_data->itemnumber%'
-            ORDER BY template_master.master_name ASC LIMIT 20
+            ORDER BY template_master.master_name ASC LIMIT 50
             ");
 
             $result = [];
@@ -329,7 +329,7 @@ class Main_model extends CI_Model {
 
             $output = '';
 
-            $sql = $this->db3->query("SELECT TOP 50
+            $sql = $this->db3->query("SELECT TOP 20
                 prodtable.itemid,
                 prodtable.dataareaid,
                 prodtable.prodid,
@@ -353,7 +353,7 @@ class Main_model extends CI_Model {
                 if(substr($rs->slc_orgreference , 0 , 2) == "PD"){
                     $wipProdid = $this->checkPDWip($searchProdid , $dataareaid);
 
-                    $sql2 = $this->db3->query("SELECT TOP 50
+                    $sql2 = $this->db3->query("SELECT TOP 20
                         prodtable.itemid,
                         prodtable.dataareaid,
                         prodtable.prodid,
@@ -451,7 +451,7 @@ class Main_model extends CI_Model {
     public function checkPDWip($prodid , $dataareaid)
     {
         $checkWip = "";
-        $sql = $this->db4->query("SELECT
+        $sql = $this->db3->query("SELECT TOP 20
                 prodtable.itemid,
                 prodtable.dataareaid,
                 prodtable.prodid,
@@ -484,7 +484,8 @@ class Main_model extends CI_Model {
             $this->input->post("m_std_output") != "" &&
             $this->input->post("m_max_temperature") != "" &&
             $this->input->post("m_item_number") != "" &&
-            $this->input->post("m_batch_number") != ""
+            $this->input->post("m_batch_number") != "" &&
+            $this->input->post("m_machine") != ""
         ){
             $formno = getFormNo();
 
@@ -494,6 +495,7 @@ class Main_model extends CI_Model {
                 "m_areaid" => $this->input->post("m_areaid"),
                 "m_product_number" => $this->input->post("m_product_number"),
                 "m_template_name" => $this->input->post("m_template_name"),
+                "m_machine" => $this->input->post("m_machine"),
                 "m_order" => $this->input->post("m_order"),
                 "m_std_output" => $this->input->post("m_std_output"),
                 "m_max_temperature" => $this->input->post("m_max_temperature"),
@@ -2809,6 +2811,29 @@ class Main_model extends CI_Model {
                 "templateRemark" => null
             );
         }
+        echo json_encode($output);
+    }
+
+
+    public function getMachine()
+    {
+        $received_data = json_decode(file_get_contents("php://input"));
+        if($received_data->action == "getMachine"){
+            $sql = $this->db->query("SELECT mach_name FROM machine_information WHERE mach_status = 'active' ");
+
+            $output = array(
+                "msg" => "ดึงข้อมูลเครื่องจักรสำเร็จ",
+                "status" => "Select Data Success",
+                "result" => $sql->result()
+            );
+        }else{
+            $output = array(
+                "msg" => "ดึงข้อมูลเครื่องจักรไม่สำเร็จ",
+                "status" => "Select Data Not Success",
+                "result" => null
+            );
+        }
+
         echo json_encode($output);
     }
 

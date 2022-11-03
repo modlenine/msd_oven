@@ -50,7 +50,7 @@
 								<thead>
 									<tr>
 										<th>Form Number</th>
-										<th>Machine Name</th>
+										<th>STD. Name</th>
 										<th>Item Number</th>
 										<th>Production Number</th>
 										<th>Batch Number</th>

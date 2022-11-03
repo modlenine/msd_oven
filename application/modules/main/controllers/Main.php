@@ -265,5 +265,10 @@ class Main extends MX_Controller {
         $this->main->getSpeacialData();
     }
 
+    public function getMachine()
+    {
+        $this->main->getMachine();
+    }
+
 }/* End of file Main.php */
 ?>
