@@ -2442,7 +2442,8 @@ class Main_model extends CI_Model {
         if($received_data->action == "saveEditHead"){
             $arUpdateHead = array(
                 "m_order" => $received_data->m_order,
-                "m_std_output" => $received_data->m_output
+                "m_std_output" => $received_data->m_output,
+                "m_machine" => $received_data->m_machine
             );
             $this->db->where("m_code" , $received_data->m_code);
             $this->db->update("main" , $arUpdateHead);

@@ -682,6 +682,11 @@
                                 <label for=""><b>Output (kg./hr)</b></label>
                                 <input type="text" name="ehmd_output" id="ehmd_output" class="form-control">
                             </div>
+
+                            <div class="col-lg-6 form-group">
+                                <label for=""><b>Machine Name</b></label>
+                                <select name="ehmd_m_machine" id="ehmd_m_machine" class="form-control"></select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -842,6 +847,7 @@
                             data_m_formno="<?=$mainformno?>"
                             data_m_order="<?=getviewfulldata(getMaincode($mainformno))->m_order?>"
                             data_m_output="<?=getviewfulldata(getMaincode($mainformno))->m_std_output?>"
+                            data_m_machine="<?=getviewfulldata(getMaincode($mainformno))->m_machine?>"
                         >
                             <i class="fa fa-edit mr-2 editHeadData" aria-hidden="true"></i>
                         </a>
@@ -1668,7 +1674,8 @@ $(document).ready(function(){
                     action:"saveEditHead",
                     m_order:$('#ehmd_order').val(),
                     m_code:$('#ehmd_mcode').val(),
-                    m_output:$('#ehmd_output').val()
+                    m_output:$('#ehmd_output').val(),
+                    m_machine:$('#ehmd_m_machine').val()
                 }).then(res=>{
                     console.log(res.data);
                     if(res.data.status == "Update Data Success"){
@@ -2143,6 +2150,9 @@ $(document).ready(function(){
         const data_m_output = $(this).attr("data_m_output");
         const data_m_typeofbag = $(this).attr("data_m_typeofbag");
         const data_m_typeofbagtxt = $(this).attr("data_m_typeofbagtxt");
+        const data_m_machine = $(this).attr("data_m_machine");
+
+        getMachine_edit(data_m_machine);
 
         $('#editHead_modal').modal('show');
         $('#ehmd_mcode').val(data_m_code);
@@ -2152,6 +2162,30 @@ $(document).ready(function(){
         $('#ehmd_typeofbag').val(data_m_typeofbag);
         $('#ehmd_typeofbagtxt').val(data_m_typeofbagtxt);
     });
+
+    function getMachine_edit(data_m_machine)
+    {
+        axios.post(url+'main/getMachine' , {
+            action:"getMachine"
+        }).then(res=>{
+            console.log(res.data);
+            if(res.data.status == "Select Data Success"){
+                let machinelist = res.data.result;
+
+                let html = `
+                    <option value="">กรุณาเลือกเครื่องจักร</option>
+                `;
+                for(let i = 0; i < machinelist.length; i++){
+                    html += `
+                        <option value="`+machinelist[i].mach_name+`">`+machinelist[i].mach_name+`</option>
+                    `;
+                }
+
+                $('#ehmd_m_machine').html(html);
+                $('#ehmd_m_machine option[value="'+data_m_machine+'"]').prop("selected" , true);
+            }
+        });
+    }
 
     $(document).on('keyup' , '.ehmd_typeofbag' , function(){
         if($(this).val() != ""){
